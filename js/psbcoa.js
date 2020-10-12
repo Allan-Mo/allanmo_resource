@@ -1,0 +1,2 @@
+$('body').innerHTML='';
+$('body').html()
