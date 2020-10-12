@@ -1,1 +1,1 @@
-$('body').innerHTML='';
+$('body').empty();
