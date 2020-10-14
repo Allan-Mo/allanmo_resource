@@ -79,6 +79,7 @@ $('body').append('\
     			$( "#suspend_progress" ).text(\
 			      "进度：第"+page+"页，共"+page_cnt+"页"\
 			    );\
+			    console.log("第"+page+"页");\
 				el = page_info(page);\
 				tbl_tag = $("#listtable",el);\
 				trs_tag = $("tr",tbl_tag);\
@@ -126,6 +127,7 @@ $('body').append('\
 			msg = $("#suspend_comment").val();\
 			$("td input:checked",$("#suspend_tbody")).each(function(){\
 				url = "https://211.156.194.132" + $(this).parent().parent()[0].attributes["url"].value;\
+				console.log("第"+$(this).parent().parent()[0].attributes["id"].value;+"个");\
 				var xmlHttp = new XMLHttpRequest(); \
 				xmlHttp.open( "GET", url, false );  \
 				xmlHttp.send( null ); \
