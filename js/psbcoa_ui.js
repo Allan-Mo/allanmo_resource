@@ -127,7 +127,7 @@ $('body').append('\
 			msg = $("#suspend_comment").val();\
 			$("td input:checked",$("#suspend_tbody")).each(function(){\
 				url = "https://211.156.194.132" + $(this).parent().parent()[0].attributes["url"].value;\
-				console.log("第"+$(this).parent().parent()[0].attributes["id"].value;+"个");\
+				console.log("第"+$(this).parent().parent()[0].attributes["id"].value+"个");\
 				var xmlHttp = new XMLHttpRequest(); \
 				xmlHttp.open( "GET", url, false );  \
 				xmlHttp.send( null ); \
