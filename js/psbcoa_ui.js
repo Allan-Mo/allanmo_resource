@@ -119,6 +119,9 @@ $('body').append('\
 		}\
 	</script>');
 
+
+
+
 //提交意见
 $('body').append('\
 	<script>\
@@ -207,6 +210,105 @@ $('body').append('\
 	</script>');
 
 
+//办结束
+$('body').append('\
+	<script>\
+		function suspend_finish_apply(){\
+			console.log("办结");\
+			msg = $("#suspend_comment").val();\
+			$("td input:checked",$("#suspend_tbody")).each(function(){\
+				url = "https://211.156.194.132" + $(this).parent().parent()[0].attributes["url"].value;\
+				console.log("第"+$(this).parent().parent()[0].attributes["id"].value+"个");\
+				var xmlHttp = new XMLHttpRequest(); \
+				xmlHttp.open( "GET", url, false );  \
+				xmlHttp.send( null ); \
+				el = document.createElement( "html" ); \
+				el.innerHTML = xmlHttp.responseText; \
+				var request = new XMLHttpRequest(); \
+				request.open("POST", "https://211.156.194.132/archives/swAction!killWorkflow.action", false); \
+				request.setRequestHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"); \
+				request.setRequestHeader("Accept-Language","zh-CN,zh;q=0.9,en;q=0.8,fr;q=0.7,zh-TW;q=0.6"); \
+				request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"); \
+				request.setRequestHeader("Cache-Control", "max-age=0"); \
+				request.setRequestHeader("Upgrade-Insecure-Requests", "1"); \
+				urlEncodedDataPairs = []; \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.idea" ) + "=" + encodeURIComponent( msg )); \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.inId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.inId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.orgId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.orgId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.flowType" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.flowType\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.subflag" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.subflag\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.fileViewRight" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.fileViewRight\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.zhengwenId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.zhengwenId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.taoHongTId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.taoHongTId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.taoHongTName" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.taoHongTName\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.gaozhiTid" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.gaozhiTid\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.gaozhiTName" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.gaozhiTName\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.flowWriteId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.flowWriteId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.fileType" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.fileType\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.flowStatusUrl" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.flowStatusUrl\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.showNotion" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.showNotion\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.scheduledTime" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.scheduledTime\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.startPeriod" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.startPeriod\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.isTimeout" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.isTimeout\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.ideaFiled" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.ideaFiled\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.filelistGZId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.filelistGZId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "orgid" ) + "=" + encodeURIComponent( $("input[name=\'orgid\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "userId" ) + "=" + encodeURIComponent( $("input[name=\'userId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "curDeptId" ) + "=" + encodeURIComponent( $("input[name=\'curDeptId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "sendDeptId" ) + "=" + encodeURIComponent( $("input[name=\'sendDeptId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.getButtons" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.getButtons\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.ideaRequired" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.ideaRequired\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "taohong" ) + "=" + encodeURIComponent( $("input[name=\'taohong\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "gaozhi" ) + "=" + encodeURIComponent( $("input[name=\'gaozhi\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "userid" ) + "=" + encodeURIComponent( $("input[name=\'userid\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "username" ) + "=" + encodeURIComponent( $("input[name=\'username\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "userdeptid" ) + "=" + encodeURIComponent( $("input[name=\'userdeptid\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "userdeptname" ) + "=" + encodeURIComponent( $("input[name=\'userdeptname\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "remindField" ) + "=" + encodeURIComponent( $("input[name=\'remindField\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "titleold" ) + "=" + encodeURIComponent( $("input[name=\'titleold\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "needGradeold" ) + "=" + encodeURIComponent( $("input[name=\'needGradeold\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "isModify" ) + "=" + encodeURIComponent( $("input[name=\'isModify\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.needGrade" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.needGrade\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.secretGrade" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.secretGrade\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.saveLimitId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.saveLimitId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.title" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.title\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.inNumber" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.inNumber\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.inSort" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.inSort\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.inSerialNum" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.inSerialNum\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.year" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.year\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.acceptDate" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.acceptDate\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.comingDeptId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.comingDeptId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.comingDeptName" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.comingDeptName\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.comingCode" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.comingCode\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.comingSort" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.comingSort\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.isDossier" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.isDossier\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "__checkbox_yzArchivesIn.isDossier" ) + "=" + encodeURIComponent( $("input[name=\'__checkbox_yzArchivesIn.isDossier\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "__checkbox_yzArchivesIn.isDossier" ) + "=" + encodeURIComponent( $("input[name=\'__checkbox_yzArchivesIn.isDossier\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.contactUser" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.contactUser\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.contactUserName" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.contactUserName\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.contactPhone" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.contactPhone\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.primaryDeptId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.primaryDeptId\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.primaryDept" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.primaryDept\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.xbDeptIdBeforeName" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.xbDeptIdBeforeName\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.xbDeptIdBefore" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.xbDeptIdBefore\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.xbDept" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.xbDept\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.xbDeptName" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.xbDeptName\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "__checkbox_yzArchivesIn.isInternalControl" ) + "=" + encodeURIComponent( $("input[name=\'__checkbox_yzArchivesIn.isInternalControl\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.isInternalControl" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.isInternalControl\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "__checkbox_yzArchivesIn.isInternalControl" ) + "=" + encodeURIComponent( $("input[name=\'__checkbox_yzArchivesIn.isInternalControl\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.endPeriod" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.endPeriod\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.modifyCount" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.modifyCount\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "signIn.sendbackReason" ) + "=" + encodeURIComponent( $("input[name=\'signIn.sendbackReason\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "signIn.backremind" ) + "=" + encodeURIComponent( $("input[name=\'signIn.backremind\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "signIn.sendId" ) + "=" + encodeURIComponent( $("input[name=\'signIn.sendId\']",el).val() ));  \
+				postData = urlEncodedDataPairs.join( "&" ).replace( /%20/g, "+" ); \
+				request.send(postData); \
+			});\
+			my_suspend();\
+		}\
+	</script>');
+
+
 $('body').append('<div class="container"><h1> OA系统小工具,by莫运政@风险管理部  </h1></div>\
 	');
 $('body').append('\
@@ -229,8 +331,11 @@ $('body').append('\
 					<a class="btn btn-large btn-success" onclick="my_suspend()">重新获取</a>\
 					<div id="suspend_info"> </div> \
 					<div id="suspend_progress"></div>\
+				</div>\
+				<div class="row">\
 					<input id="suspend_comment" type="text" value="已阅。">\
-					<a class="btn btn-large btn-success" onclick="suspend_apply()">提交意见</a>\
+					<a class="btn btn-large btn-success" onclick="suspend_apply()">提交办理</a>\
+					<a class="btn btn-large btn-success" onclick="suspend_finish_apply()">办结</a>\
 				</div>\
 			</div>\
 			<div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="profile-tab-md">\
