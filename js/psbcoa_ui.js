@@ -307,6 +307,7 @@ $('body').append('\
 
 $('body').append('<div class="container"><h1> OA系统小工具,by莫运政@风险管理部  </h1></div>\
 	');
+//<a class="btn btn-large btn-success" onclick="suspend_apply()">提交办理</a>\
 $('body').append('\
 	<div class-"container">\
 		<ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">\
@@ -330,7 +331,7 @@ $('body').append('\
 				</div>\
 				<div class="row">\
 					<input id="suspend_comment" type="text" value="已阅。">\
-					<a class="btn btn-large btn-success" onclick="suspend_apply()">提交办理</a>\
+					\
 					<a class="btn btn-large btn-success" onclick="suspend_finish_apply()">办结</a>\
 				</div>\
 			</div>\
