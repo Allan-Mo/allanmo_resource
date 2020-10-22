@@ -124,7 +124,7 @@ $('body').append('\
 						"date":tds_tag[4].textContent.trim(),\
 					};\
 					$("#suspend_tbody").append(\' \
-						<tr idx="\'+rst.idx+\'" url="\'+rst.url+\'">\
+						<tr id="\'+rst.idx+\'" url="\'+rst.url+\'">\
 				        <td><input type="checkbox" name="check"> </td>\
 				        <th scope="row">\' + rst.idx + \'</th>\
 				        <td>\'+rst.page+\'</td>\
@@ -340,7 +340,7 @@ $('body').append('\
 			for (i=0;i<select_tds.length;i++){\
 				tr = $(select_tds[i]).parent().parent()[0];\
 				url = "https://211.156.194.132" + tr.attributes["url"].value;\
-				idx = tr.attributes["idx"].value;\
+				idx = tr.attributes["id"].value;\
 				console.log("第"+idx+"个：开始");\
 				my_kill(idx,url,msg);\
 			};\
