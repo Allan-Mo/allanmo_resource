@@ -98,7 +98,7 @@ $('body').append('\
 			page_cnt = suspend_page_count();\
 			console.log("共"+page_cnt+"页");\
 			var idx =0;\
-    		for (let page=1;page<=page_cnt;page++) { \
+    		for (page=1;page<=page_cnt;page++) { \
     			$( "#suspend_progress" ).text(\
 			      "进度：第"+page+"页，共"+page_cnt+"页"\
 			    );\
@@ -107,7 +107,7 @@ $('body').append('\
 				tbl_tag = $("#listtable",el);\
 				trs_tag = $("tr",tbl_tag);\
 				if (trs_tag.length<2) break;\
-				for (let i=1;i<trs_tag.length;i++) {\
+				for (i=1;i<trs_tag.length;i++) {\
 					idx += 1;\
 					tr_tag = trs_tag[i];\
 					tds_tag = $("td",tr_tag);\
@@ -124,7 +124,7 @@ $('body').append('\
 						"date":tds_tag[4].textContent.trim(),\
 					};\
 					$("#suspend_tbody").append(\' \
-						<tr id="\'+rst.idx+\'" url="\'+rst.url+\'">\
+						<tr idx="\'+rst.idx+\'" url="\'+rst.url+\'">\
 				        <td><input type="checkbox" name="check"> </td>\
 				        <th scope="row">\' + rst.idx + \'</th>\
 				        <td>\'+rst.page+\'</td>\
@@ -337,7 +337,7 @@ $('body').append('\
 			console.log("待办-办结");\
 			msg = $("#suspend_comment").val();\
 			select_tds = $("td input:checked",$("#suspend_tbody"));\
-			for (let i=0;i<select_tds.length;i++){\
+			for (i=0;i<select_tds.length;i++){\
 				tr = $(select_tds[i]).parent().parent()[0];\
 				url = "https://211.156.194.132" + tr.attributes["url"].value;\
 				idx = tr.attributes["idx"].value;\
@@ -390,7 +390,7 @@ $('body').append('\
 			$("#sw_suspend_tbody").empty();\
 			page_cnt = sw_suspend_page_count();\
 			console.log("共"+page_cnt+"页");\
-    		for (let page=1;page<=page_cnt;page++) { \
+    		for (page=1;page<=page_cnt;page++) { \
     			$( "#sw_suspend_progress" ).text(\
 			      "进度：第"+page+"页，共"+page_cnt+"页"\
 			    );\
@@ -399,7 +399,7 @@ $('body').append('\
 				tbl_tag = $("#listtable",el);\
 				trs_tag = $("tr",tbl_tag);\
 				if (trs_tag.length<2) break;\
-				for (let i=1;i<trs_tag.length-1;i++) {\
+				for (i=1;i<trs_tag.length-1;i++) {\
 					tr_tag = trs_tag[i];\
 					tds_tag = $("td",tr_tag);\
 					idx =  parseInt(tds_tag[0].textContent.trim());\
@@ -439,7 +439,7 @@ $('body').append('\
 			console.log("收文待办-办结");\
 			msg = $("#sw_suspend_comment").val();\
 			select_tds = $("td input:checked",$("#sw_suspend_tbody"));\
-			for (let i=0;i<select_tds.length;i++){\
+			for (i=0;i<select_tds.length;i++){\
 				tr = $(select_tds[i]).parent().parent()[0];\
 				url = "https://211.156.194.132" + tr.attributes["url"].value;\
 				idx = tr.attributes["idx"].value;\
