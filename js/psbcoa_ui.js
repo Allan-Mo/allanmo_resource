@@ -23,17 +23,43 @@ $('head').append('\
 		}\
 	</style>' );
 
-// 初始化
+
 $('body').addClass("vsc-initialized");
+// ---------------------------------------------- 办结
+
 $('body').append('\
 	<script>\
-		var myz_rst={};\
+		function my_kill_ajax(idx,url,msg){\
+			var xmlHttp = new XMLHttpRequest(); \
+			xmlHttp.open( "GET", url, false );  \
+			xmlHttp.send( null ); \
+			el = document.createElement( "html" ); \
+			el.innerHTML = xmlHttp.responseText;\
+			frm = $("#frm",el);\
+			frm_dict = {};\
+			$("input",frm).each(function(){\
+				frm_dict[$(this).attr("name")] = $(this).val();\
+			});\
+			frm_dict["yzArchivesIn.idea"] = msg;\
+			$.post(\
+			          "/archives/swAction!killWorkflow.action",\
+			          frm_dict\
+			      );\
+		};\
 	</script>');
+$('body').append('\
+	<script>\
+		function my_kill(idx,url,msg){\
+			my_kill_ajax(idx,url,msg);\
+		}\
+	</script>');
+
+// ---------------------------------------------- 待办
 // 页面信息
 
 $('body').append('\
 	<script>\
-		function page_info(page){\
+		function suspend_page_info(page){\
 			xmlHttp = new XMLHttpRequest(); \
 			xmlHttp.open( "GET", "https://211.156.194.132/index/index!getMoreDb.action?bean.pageNo=" + page, false );  \
 			xmlHttp.send( null );\
@@ -47,7 +73,7 @@ $('body').append('\
 $('body').append('\
 	<script>\
 		function suspend_page_count(){\
-			el = page_info(1); \
+			el = suspend_page_info(1); \
 			text = $(".page .message",el).text();\
 			$( "#suspend_info" ).text("检查:" +text);\
 			return parseInt(text.split("/")[1].split("页")[0]); \
@@ -56,7 +82,7 @@ $('body').append('\
 //选择所有
 $('body').append('\
 	<script>\
-		function checkbox_all(tbody_id,status){\
+		function suspend_checkbox_all(tbody_id,status){\
 			$("td input[name=\'check\']",$(tbody_id)).prop("checked",status);\
 		}\
 	</script>');
@@ -66,17 +92,18 @@ $('body').append('\
 // 点击刷新
 $('body').append('\
 	<script>\
-		function my_suspend(){\
-			myz_rst.all_url = [] ;\
+		function suspend_refresh(){\
+			console.log("收文待办-获取列表");\
 			$("#suspend_tbody").empty();\
 			page_cnt = suspend_page_count();\
+			console.log("共"+page_cnt+"页");\
 			var idx =0;\
     		for (let page=1;page<=page_cnt;page++) { \
     			$( "#suspend_progress" ).text(\
 			      "进度：第"+page+"页，共"+page_cnt+"页"\
 			    );\
 			    console.log("第"+page+"页");\
-				el = page_info(page);\
+				el = suspend_page_info(page);\
 				tbl_tag = $("#listtable",el);\
 				trs_tag = $("tr",tbl_tag);\
 				if (trs_tag.length<2) break;\
@@ -96,7 +123,6 @@ $('body').append('\
 						"from":tds_tag[3].textContent.trim(),\
 						"date":tds_tag[4].textContent.trim(),\
 					};\
-					myz_rst[idx.toString()]=rst;\
 					$("#suspend_tbody").append(\' \
 						<tr id="\'+rst.idx+\'" url="\'+rst.url+\'">\
 				        <td><input type="checkbox" name="check"> </td>\
@@ -111,8 +137,8 @@ $('body').append('\
 				      </tr>\' \
 					);\
 				};\
-			}\
-		}\
+			};\
+		};\
 	</script>');
 
 
@@ -121,7 +147,7 @@ $('body').append('\
 //提交意见
 $('body').append('\
 	<script>\
-		function suspend_apply(){\
+		function suspend_comment(){\
 			console.log("提交意见");\
 			msg = $("#suspend_comment").val();\
 			$("td input:checked",$("#suspend_tbody")).each(function(){\
@@ -193,15 +219,15 @@ $('body').append('\
 				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.primaryDeptId" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.primaryDeptId\']",el).val() ));  \
 				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.xbDeptIdBeforeName" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.xbDeptIdBeforeName\']",el).val() ));  \
 				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.xbDept" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.xbDept\']",el).val() ));  \
-				urlEncodedDataPairs.push( encodeURIComponent( "__checkbox_yzArchivesIn.isInternalControl" ) + "=" + encodeURIComponent( $("input[name=\'__checkbox_yzArchivesIn.isInternalControl\']",el).val() ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "__checkbox_yzArchivesIn.isInternalControl" ) + "=" + encodeURIComponent( "1" ));  \
+				urlEncodedDataPairs.push( encodeURIComponent( "__checkbox_yzArchivesIn.isInternalControl" ) + "=" + encodeURIComponent( "0" ));  \
 				urlEncodedDataPairs.push( encodeURIComponent( "yzArchivesIn.isInternalControl" ) + "=" + encodeURIComponent( $("input[name=\'yzArchivesIn.isInternalControl\']",el).val() ));  \
-				urlEncodedDataPairs.push( encodeURIComponent( "__checkbox_yzArchivesIn.isInternalControl" ) + "=" + encodeURIComponent( $("input[name=\'__checkbox_yzArchivesIn.isInternalControl\']",el).val() ));  \
 				urlEncodedDataPairs.push( encodeURIComponent( "signIn.sendbackReason" ) + "=" + encodeURIComponent( $("input[name=\'signIn.sendbackReason\']",el).val() ));  \
 				urlEncodedDataPairs.push( encodeURIComponent( "signIn.sendId" ) + "=" + encodeURIComponent( $("input[name=\'signIn.sendId\']",el).val() ));  \
 				postData = urlEncodedDataPairs.join( "&" ).replace( /%20/g, "+" ); \
 				request.send(postData); \
 			});\
-			my_suspend();\
+			suspend_fresh();\
 		}\
 	</script>');
 
@@ -209,12 +235,12 @@ $('body').append('\
 //办结束
 $('body').append('\
 	<script>\
-		function suspend_finish_apply(){\
+		function suspend_kill_request(){\
 			console.log("办结");\
 			msg = $("#suspend_comment").val();\
 			$("td input:checked",$("#suspend_tbody")).each(function(){\
 				url = "https://211.156.194.132" + $(this).parent().parent()[0].attributes["url"].value;\
-				console.log("第"+$(this).parent().parent()[0].attributes["id"].value+"个");\
+				console.log("第"+$(this).parent().parent()[0].attributes["idx"].value+"个");\
 				var xmlHttp = new XMLHttpRequest(); \
 				xmlHttp.open( "GET", url, false );  \
 				xmlHttp.send( null ); \
@@ -300,10 +326,131 @@ $('body').append('\
 				postData = urlEncodedDataPairs.join( "&" ).replace( /%20/g, "+" ); \
 				request.send(postData); \
 			});\
-			my_suspend();\
+			suspend_comment();\
 		}\
 	</script>');
 
+//代办-办结
+$('body').append('\
+	<script>\
+		function suspend_kill(){\
+			console.log("待办-办结");\
+			msg = $("#suspend_comment").val();\
+			select_tds = $("td input:checked",$("#suspend_tbody"));\
+			for (let i=0;i<select_tds.length;i++){\
+				tr = $(select_tds[i]).parent().parent()[0];\
+				url = "https://211.156.194.132" + tr.attributes["url"].value;\
+				idx = tr.attributes["idx"].value;\
+				console.log("第"+idx+"个：开始");\
+				my_kill(idx,url,msg);\
+			};\
+			sw_suspend_refresh();\
+		}\
+	</script>');
+
+// ---------------------------------------------- 收文代办
+
+// 收文代办-页面信息
+
+$('body').append('\
+	<script>\
+		function sw_suspend_page_info(page){\
+			xmlHttp = new XMLHttpRequest(); \
+			xmlHttp.open( "GET", "https://211.156.194.132/archives/gongwenCommonAction!todoList.action?bean.pageNo=" + page + "&model_id=030004003&queryCondition.gongwenType=SW", false );  \
+			xmlHttp.send( null );\
+			el = document.createElement( "html" );\
+			el.innerHTML = xmlHttp.responseText; \
+			return el; \
+		};\
+	</script>');
+
+// 收文代办-页面总数
+$('body').append('\
+	<script>\
+		function sw_suspend_page_count(){\
+			el = sw_suspend_page_info(1); \
+			text = $(".page .message",el).text();\
+			$( "#sw_suspend_info" ).text("检查:" +text);\
+			return parseInt(text.split("/")[1].split("页")[0]); \
+		}\
+	</script>');
+//收文代办-选择所有
+$('body').append('\
+	<script>\
+		function sw_suspend_checkbox_all(tbody_id,status){\
+			$("td input[name=\'check\']",$(tbody_id)).prop("checked",status);\
+		}\
+	</script>');
+
+// 收文代办-点击刷新
+$('body').append('\
+	<script>\
+		function sw_suspend_refresh(){\
+			console.log("收文待办-获取列表");\
+			$("#sw_suspend_tbody").empty();\
+			page_cnt = sw_suspend_page_count();\
+			console.log("共"+page_cnt+"页");\
+    		for (let page=1;page<=page_cnt;page++) { \
+    			$( "#sw_suspend_progress" ).text(\
+			      "进度：第"+page+"页，共"+page_cnt+"页"\
+			    );\
+			    console.log("第"+page+"页");\
+				el = sw_suspend_page_info(page);\
+				tbl_tag = $("#listtable",el);\
+				trs_tag = $("tr",tbl_tag);\
+				if (trs_tag.length<2) break;\
+				for (let i=1;i<trs_tag.length-1;i++) {\
+					tr_tag = trs_tag[i];\
+					tds_tag = $("td",tr_tag);\
+					idx =  parseInt(tds_tag[0].textContent.trim());\
+					rst = {\
+						"idx":idx,\
+						"page":page,\
+						"i":i,\
+						"url":tr_tag.attributes["url"].textContent + "&yzArchivesIn.flowWriteId=" + tr_tag.attributes["id"].textContent,\
+						"type":tds_tag[1].textContent.trim(),\
+						"title":tds_tag[2].textContent.trim(),\
+						"code":tds_tag[3].textContent.trim(),\
+						"from":tds_tag[4].textContent.trim(),\
+						"date":tds_tag[5].textContent.trim(),\
+					};\
+					$("#sw_suspend_tbody").append(\' \
+						<tr idx="\'+rst.idx+\'" url="\'+rst.url+\'">\
+				        <td><input type="checkbox" name="check"> </td>\
+				        <th scope="row">\' + rst.idx + \'</th>\
+				        <td>\'+rst.page+\'</td>\
+				        <td>\'+rst.i+\'</td>\
+				        <td>\'+rst.type+\'</td>\
+				        <td>\'+rst.title+\'</td>\
+				        <td>\'+rst.code+\'</td>\
+				        <td>\'+rst.from+\'</td>\
+				        <td>\'+rst.date+\'</td>\
+				      </tr>\' \
+					);\
+				};\
+			};\
+		};\
+	</script>');
+
+//收文代办-办结束
+$('body').append('\
+	<script>\
+		function sw_suspend_kill(){\
+			console.log("收文待办-办结");\
+			msg = $("#sw_suspend_comment").val();\
+			select_tds = $("td input:checked",$("#sw_suspend_tbody"));\
+			for (let i=0;i<select_tds.length;i++){\
+				tr = $(select_tds[i]).parent().parent()[0];\
+				url = "https://211.156.194.132" + tr.attributes["url"].value;\
+				idx = tr.attributes["idx"].value;\
+				console.log("第"+idx+"个：开始");\
+				my_kill_ajax(idx,url,msg);\
+			};\
+			sw_suspend_refresh();\
+		}\
+	</script>');
+
+// ---------------------------------------------- UI
 
 $('body').append('<div class="container"><h1> OA系统小工具,by莫运政@风险管理部  </h1></div>\
 	');
@@ -316,8 +463,8 @@ $('body').append('\
 			aria-selected="true">待办</a>\
 			</li>\
 			<li class="nav-item">\
-				<a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#done" role="tab" aria-controls="profile-md"\
-			aria-selected="false">已办</a>\
+				<a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#sw_suspend" role="tab" aria-controls="profile-md"\
+			aria-selected="false">收文待办</a>\
 			</li>\
 		</ul>\
 	</div>\
@@ -325,18 +472,26 @@ $('body').append('\
 		<div class="tab-content card pt-5" id="myTabContentMD">\
 			<div class="tab-pane fade show active" id="suspend" role="tabpanel" aria-labelledby="home-tab-md">\
 				<div class="row"> \
-					<a class="btn btn-large btn-success" onclick="my_suspend()">重新获取</a>\
+					<a class="btn btn-large btn-success" onclick="suspend_refresh()">重新获取(代办)</a>\
 					<div id="suspend_info"> </div> \
 					<div id="suspend_progress"></div>\
 				</div>\
 				<div class="row">\
 					<input id="suspend_comment" type="text" value="已阅。">\
 					\
-					<a class="btn btn-large btn-success" onclick="suspend_finish_apply()">办结</a>\
+					<a class="btn btn-large btn-success" onclick="suspend_kill()">办结(代办)</a>\
 				</div>\
 			</div>\
-			<div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="profile-tab-md">\
-				<a class="btn btn-large btn-success" onclick="my_done()">重新获取</a>\
+			<div class="tab-pane fade" id="sw_suspend" role="tabpanel" aria-labelledby="profile-tab-md">\
+				<div class="row"> \
+					<a class="btn btn-large btn-success" onclick="sw_suspend_refresh()">重新获取(收文代办)</a>\
+					<div id="sw_suspend_info"> </div> \
+					<div id="sw_suspend_progress"></div>\
+				</div>\
+				<div class="row">\
+					<input id="sw_suspend_comment" type="text" value="已阅。">\
+					<a class="btn btn-large btn-success" onclick="sw_suspend_kill()">办结(收文代办)</a>\
+				</div>\
 			</div>\
 		</div>\
 	</div>');
@@ -345,7 +500,7 @@ $('#suspend').append('\
 	  <table class="table table-bordered table-striped mb-0">\
 	    <thead>\
 	      <tr>\
-	      	<th scope="col"> <input type="checkbox" name="suspend_check" onclick="checkbox_all(\'#suspend_tbody\',this.checked)">全选 </th>\
+	      	<th scope="col"> <input type="checkbox" name="suspend_check" onclick="suspend_checkbox_all(\'#suspend_tbody\',this.checked)">全选 </th>\
 			<th scope="col">序号</th>\
 			<th scope="col">页码</th>\
 			<th scope="col">顺序</th>\
@@ -357,6 +512,26 @@ $('#suspend').append('\
 	      </tr>\
 	    </thead>\
 	    <tbody id="suspend_tbody">\
+	    </tbody>\
+	  </table>\
+	</div>');
+$('#sw_suspend').append('\
+	<div class="table-wrapper-scroll-y my-custom-scrollbar">\
+	  <table class="table table-bordered table-striped mb-0">\
+	    <thead>\
+	      <tr>\
+	      	<th scope="col"> <input type="checkbox" name="sw_suspend_check" onclick="sw_suspend_checkbox_all(\'#sw_suspend_tbody\',this.checked)">全选 </th>\
+			<th scope="col">序号</th>\
+			<th scope="col">页码</th>\
+			<th scope="col">顺序</th>\
+			<th scope="col">流程类型</th>\
+			<th scope="col">标题</th>\
+			<th scope="col">文号</th>\
+			<th scope="col">前一办理人</th>\
+			<th scope="col">时间</th>\
+	      </tr>\
+	    </thead>\
+	    <tbody id="sw_suspend_tbody">\
 	    </tbody>\
 	  </table>\
 	</div>');
