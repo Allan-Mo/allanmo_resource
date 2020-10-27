@@ -452,7 +452,7 @@ $('body').append('\
 
 // ---------------------------------------------- UI
 
-$('body').append('<div class="container"><h1> OA系统小工具,by莫运政@风险管理部  </h1></div>\
+$('body').append('<div class="container"><h1> OA系统小工具,by莫运政@风险管理部  </h1></div><div><h4>(注：仅用于2020年10月一次性处理积压的收文，之后的收文请不要使用该工具)</h4></div>\
 	');
 //<a class="btn btn-large btn-success" onclick="suspend_apply()">提交办理</a>\
 $('body').append('\
