@@ -61,7 +61,7 @@ $('body').append('\
 	<script>\
 		function suspend_page_info(page){\
 			xmlHttp = new XMLHttpRequest(); \
-			xmlHttp.open( "GET", "https://211.156.194.132/index/index!getMoreDb.action?bean.pageNo=" + page, false );  \
+			xmlHttp.open( "GET", "/index/index!getMoreDb.action?bean.pageNo=" + page, false );  \
 			xmlHttp.send( null );\
 			el = document.createElement( "html" );\
 			el.innerHTML = xmlHttp.responseText; \
@@ -151,7 +151,7 @@ $('body').append('\
 			console.log("提交意见");\
 			msg = $("#suspend_comment").val();\
 			$("td input:checked",$("#suspend_tbody")).each(function(){\
-				url = "https://211.156.194.132" + $(this).parent().parent()[0].attributes["url"].value;\
+				url = $(this).parent().parent()[0].attributes["url"].value;\
 				console.log("第"+$(this).parent().parent()[0].attributes["id"].value+"个");\
 				var xmlHttp = new XMLHttpRequest(); \
 				xmlHttp.open( "GET", url, false );  \
@@ -159,7 +159,7 @@ $('body').append('\
 				el = document.createElement( "html" ); \
 				el.innerHTML = xmlHttp.responseText; \
 				var request = new XMLHttpRequest(); \
-				request.open("POST", "https://211.156.194.132/archives/swAction!submitWorkflow.action", false); \
+				request.open("POST", "/archives/swAction!submitWorkflow.action", false); \
 				request.setRequestHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"); \
 				request.setRequestHeader("Accept-Language","zh-CN,zh;q=0.9,en;q=0.8,fr;q=0.7,zh-TW;q=0.6"); \
 				request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"); \
@@ -239,7 +239,7 @@ $('body').append('\
 			console.log("办结");\
 			msg = $("#suspend_comment").val();\
 			$("td input:checked",$("#suspend_tbody")).each(function(){\
-				url = "https://211.156.194.132" + $(this).parent().parent()[0].attributes["url"].value;\
+				url = $(this).parent().parent()[0].attributes["url"].value;\
 				console.log("第"+$(this).parent().parent()[0].attributes["idx"].value+"个");\
 				var xmlHttp = new XMLHttpRequest(); \
 				xmlHttp.open( "GET", url, false );  \
@@ -247,7 +247,7 @@ $('body').append('\
 				el = document.createElement( "html" ); \
 				el.innerHTML = xmlHttp.responseText; \
 				var request = new XMLHttpRequest(); \
-				request.open("POST", "https://211.156.194.132/archives/swAction!killWorkflow.action", false); \
+				request.open("POST", "/archives/swAction!killWorkflow.action", false); \
 				request.setRequestHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"); \
 				request.setRequestHeader("Accept-Language","zh-CN,zh;q=0.9,en;q=0.8,fr;q=0.7,zh-TW;q=0.6"); \
 				request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"); \
@@ -330,7 +330,7 @@ $('body').append('\
 		}\
 	</script>');
 
-//代办-办结
+//待办-办结
 $('body').append('\
 	<script>\
 		function suspend_kill(){\
@@ -339,7 +339,7 @@ $('body').append('\
 			select_tds = $("td input:checked",$("#suspend_tbody"));\
 			for (i=0;i<select_tds.length;i++){\
 				tr = $(select_tds[i]).parent().parent()[0];\
-				url = "https://211.156.194.132" + tr.attributes["url"].value;\
+				url = tr.attributes["url"].value;\
 				idx = tr.attributes["id"].value;\
 				console.log("第"+idx+"个：开始");\
 				my_kill(idx,url,msg);\
@@ -348,15 +348,15 @@ $('body').append('\
 		}\
 	</script>');
 
-// ---------------------------------------------- 收文代办
+// ---------------------------------------------- 收文待办
 
-// 收文代办-页面信息
+// 收文待办-页面信息
 
 $('body').append('\
 	<script>\
 		function sw_suspend_page_info(page){\
 			xmlHttp = new XMLHttpRequest(); \
-			xmlHttp.open( "GET", "https://211.156.194.132/archives/gongwenCommonAction!todoList.action?bean.pageNo=" + page + "&model_id=030004003&queryCondition.gongwenType=SW", false );  \
+			xmlHttp.open( "GET", "/archives/gongwenCommonAction!todoList.action?bean.pageNo=" + page + "&model_id=030004003&queryCondition.gongwenType=SW", false );  \
 			xmlHttp.send( null );\
 			el = document.createElement( "html" );\
 			el.innerHTML = xmlHttp.responseText; \
@@ -364,7 +364,7 @@ $('body').append('\
 		};\
 	</script>');
 
-// 收文代办-页面总数
+// 收文待办-页面总数
 $('body').append('\
 	<script>\
 		function sw_suspend_page_count(){\
@@ -374,7 +374,7 @@ $('body').append('\
 			return parseInt(text.split("/")[1].split("页")[0]); \
 		}\
 	</script>');
-//收文代办-选择所有
+//收文待办-选择所有
 $('body').append('\
 	<script>\
 		function sw_suspend_checkbox_all(tbody_id,status){\
@@ -382,7 +382,7 @@ $('body').append('\
 		}\
 	</script>');
 
-// 收文代办-点击刷新
+// 收文待办-点击刷新
 $('body').append('\
 	<script>\
 		function sw_suspend_refresh(){\
@@ -399,7 +399,7 @@ $('body').append('\
 				tbl_tag = $("#listtable",el);\
 				trs_tag = $("tr",tbl_tag);\
 				if (trs_tag.length<2) break;\
-				for (i=1;i<trs_tag.length-1;i++) {\
+				for (i=1;i<trs_tag.length;i++) {\
 					tr_tag = trs_tag[i];\
 					tds_tag = $("td",tr_tag);\
 					idx =  parseInt(tds_tag[0].textContent.trim());\
@@ -432,7 +432,7 @@ $('body').append('\
 		};\
 	</script>');
 
-//收文代办-办结束
+//收文待办-办结束
 $('body').append('\
 	<script>\
 		function sw_suspend_kill(){\
@@ -441,7 +441,7 @@ $('body').append('\
 			select_tds = $("td input:checked",$("#sw_suspend_tbody"));\
 			for (i=0;i<select_tds.length;i++){\
 				tr = $(select_tds[i]).parent().parent()[0];\
-				url = "https://211.156.194.132" + tr.attributes["url"].value;\
+				url = tr.attributes["url"].value;\
 				idx = tr.attributes["idx"].value;\
 				console.log("第"+idx+"个：开始");\
 				my_kill_ajax(idx,url,msg);\
@@ -450,6 +450,113 @@ $('body').append('\
 		}\
 	</script>');
 
+
+// ---------------------------------------------- 待阅
+
+// 待阅-页面信息
+
+$('body').append('\
+	<script>\
+		function dy_suspend_page_info(page){\
+			xmlHttp = new XMLHttpRequest(); \
+			xmlHttp.open( "GET", "/indexController/getMoreDy.done?pageNo="+page, false );  \
+			xmlHttp.send( null );\
+			el = document.createElement( "html" );\
+			el.innerHTML = xmlHttp.responseText; \
+			return el; \
+		};\
+	</script>');
+
+// 待阅-页面总数
+$('body').append('\
+	<script>\
+		function dy_suspend_page_count(){\
+			el = dy_suspend_page_info(1); \
+			text = $(".page .message",el).text();\
+			$( "#dy_suspend_info" ).text("检查:" +text);\
+			return parseInt(text.split("/")[1].split("页")[0]); \
+		}\
+	</script>');
+//待阅-选择所有
+$('body').append('\
+	<script>\
+		function dy_suspend_checkbox_all(tbody_id,status){\
+			$("td input[name=\'check\']",$(tbody_id)).prop("checked",status);\
+		}\
+	</script>');
+
+// 待阅-点击刷新
+$('body').append('\
+	<script>\
+		function dy_suspend_refresh(){\
+			console.log("待阅-获取列表");\
+			$("#dy_suspend_tbody").empty();\
+			page_cnt = dy_suspend_page_count();\
+			console.log("共"+page_cnt+"页");\
+    		for (page=1;page<=page_cnt;page++) { \
+    			$( "#dy_suspend_progress" ).text(\
+			      "进度：第"+page+"页，共"+page_cnt+"页"\
+			    );\
+			    console.log("第"+page+"页");\
+				el = dy_suspend_page_info(page);\
+				tbl_tag = $("#orderTabledy",el);\
+				trs_tag = $("tr",tbl_tag);\
+				if (trs_tag.length<2) break;\
+				for (i=1;i<trs_tag.length;i++) {\
+					tr_tag = trs_tag[i];\
+					tds_tag = $("td",tr_tag);\
+					idx =  parseInt(tds_tag[0].textContent.trim());\
+					rst = {\
+						"idx":idx,\
+						"page":page,\
+						"i":i,\
+						"type":tds_tag[1].textContent.trim(),\
+						"title":tds_tag[2].textContent.trim(),\
+						"from":tds_tag[3].textContent.trim(),\
+						"date":tds_tag[4].textContent.trim(),\
+						"uid":tr_tag.getAttribute("id"),\
+					};\
+					$("#dy_suspend_tbody").append(\' \
+						<tr idx="\'+rst.idx+\'" uid="\'+rst.uid+\'">\
+				        <td><input type="checkbox" name="check"> </td>\
+				        <th scope="row">\' + rst.idx + \'</th>\
+				        <td>\'+rst.page+\'</td>\
+				        <td>\'+rst.i+\'</td>\
+				        <td>\'+rst.type+\'</td>\
+				        <td>\'+rst.title+\'</td>\
+				        <td>\'+rst.from+\'</td>\
+				        <td>\'+rst.date+\'</td>\
+				      </tr>\' \
+					);\
+				};\
+			};\
+		};\
+	</script>');
+
+//待阅-点击阅毕
+$('body').append('\
+	<script>\
+		function dy_suspend_kill(){\
+			console.log("待阅-办结");\
+			frm_dict = {"keywords":[],"sendIds":[]};\
+			select_tds = $("td input:checked",$("#dy_suspend_tbody"));\
+			for (i=0;i<select_tds.length;i++){\
+				tr = $(select_tds[i]).parent().parent()[0];\
+				uid = tr.attributes["uid"].value;\
+				idx = tr.attributes["idx"].value;\
+				console.log("第"+idx+"个：开始");\
+				frm_dict["keywords"].push("收文");\
+				frm_dict["sendIds"].push(uid);\
+			};\
+			frm_dict["keywords"] = frm_dict["keywords"].join(",");\
+			frm_dict["sendIds"] = frm_dict["sendIds"].join(",");\
+			$.post(\
+			          "/index/index!updateYb.action",\
+			          frm_dict\
+			      );\
+			dy_suspend_refresh();\
+		}\
+	</script>');
 // ---------------------------------------------- UI
 
 $('body').append('<div class="container"><h1> OA系统小工具,by莫运政@风险管理部  </h1></div><div><h4>(注：仅用于2020年10月一次性处理积压的收文，之后的收文请不要使用该工具)</h4></div>\
@@ -459,38 +566,50 @@ $('body').append('\
 	<div class-"container">\
 		<ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">\
 			<li class="nav-item">\
-				<a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#suspend" role="tab" aria-controls="home-md"\
+				<a class="nav-link active" id="db-tab-md" data-toggle="tab" href="#suspend" role="tab" aria-controls="home-md"\
 			aria-selected="true">待办</a>\
 			</li>\
 			<li class="nav-item">\
-				<a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#sw_suspend" role="tab" aria-controls="profile-md"\
+				<a class="nav-link" id="sw-tab-md" data-toggle="tab" href="#sw_suspend" role="tab" aria-controls="profile-md"\
 			aria-selected="false">收文待办</a>\
+			</li>\
+			<li class="nav-item">\
+				<a class="nav-link" id="sw-tab-md" data-toggle="tab" href="#dy_suspend" role="tab" aria-controls="profile-md"\
+			aria-selected="false">待阅</a>\
 			</li>\
 		</ul>\
 	</div>\
 	<div class-"container" id="my_last_el">\
 		<div class="tab-content card pt-5" id="myTabContentMD">\
-			<div class="tab-pane fade show active" id="suspend" role="tabpanel" aria-labelledby="home-tab-md">\
+			<div class="tab-pane fade show active" id="suspend" role="tabpanel" aria-labelledby="db-tab-md">\
 				<div class="row"> \
-					<a class="btn btn-large btn-success" onclick="suspend_refresh()">重新获取(代办)</a>\
+					<a class="btn btn-large btn-success" onclick="suspend_refresh()">重新获取(待办)</a>\
 					<div id="suspend_info"> </div> \
 					<div id="suspend_progress"></div>\
 				</div>\
 				<div class="row">\
 					<input id="suspend_comment" type="text" value="已阅。">\
 					\
-					<a class="btn btn-large btn-success" onclick="suspend_kill()">办结(代办)</a>\
+					<a class="btn btn-large btn-success" onclick="suspend_kill()">点击办结</a>\
 				</div>\
 			</div>\
-			<div class="tab-pane fade" id="sw_suspend" role="tabpanel" aria-labelledby="profile-tab-md">\
+			<div class="tab-pane fade" id="sw_suspend" role="tabpanel" aria-labelledby="sw-tab-md">\
 				<div class="row"> \
-					<a class="btn btn-large btn-success" onclick="sw_suspend_refresh()">重新获取(收文代办)</a>\
+					<a class="btn btn-large btn-success" onclick="sw_suspend_refresh()">重新获取(收文待办)</a>\
 					<div id="sw_suspend_info"> </div> \
 					<div id="sw_suspend_progress"></div>\
 				</div>\
 				<div class="row">\
 					<input id="sw_suspend_comment" type="text" value="已阅。">\
-					<a class="btn btn-large btn-success" onclick="sw_suspend_kill()">办结(收文代办)</a>\
+					<a class="btn btn-large btn-success" onclick="sw_suspend_kill()">点击办结</a>\
+				</div>\
+			</div>\
+			<div class="tab-pane fade" id="dy_suspend" role="tabpanel" aria-labelledby="sw-tab-md">\
+				<div class="row"> \
+					<a class="btn btn-large btn-success" onclick="dy_suspend_refresh()">重新获取(待阅)</a>\
+					<a class="btn btn-large btn-success" onclick="dy_suspend_kill()">点击阅毕</a>\
+					<div id="dy_suspend_info"> </div> \
+					<div id="dy_suspend_progress"></div>\
 				</div>\
 			</div>\
 		</div>\
@@ -536,4 +655,22 @@ $('#sw_suspend').append('\
 	  </table>\
 	</div>');
 
-
+$('#dy_suspend').append('\
+	<div class="table-wrapper-scroll-y my-custom-scrollbar">\
+	  <table class="table table-bordered table-striped mb-0">\
+	    <thead>\
+	      <tr>\
+	      	<th scope="col"> <input type="checkbox" name="dy_suspend_check" onclick="dy_suspend_checkbox_all(\'#dy_suspend_tbody\',this.checked)">全选 </th>\
+			<th scope="col">序号</th>\
+			<th scope="col">页码</th>\
+			<th scope="col">顺序</th>\
+			<th scope="col">类型</th>\
+			<th scope="col">标题</th>\
+			<th scope="col">发送人</th>\
+			<th scope="col">发送时间</th>\
+	      </tr>\
+	    </thead>\
+	    <tbody id="dy_suspend_tbody">\
+	    </tbody>\
+	  </table>\
+	</div>');
