@@ -25,6 +25,20 @@ $('head').append('\
 
 
 $('body').addClass("vsc-initialized");
+
+
+$('body').append('\
+	<script>\
+		function sleep(milliseconds) {\
+  			const date = Date.now();\
+		    let currentDate = null;\
+		    do {\
+		    	currentDate = Date.now();\
+		    } while (currentDate - date < milliseconds);\
+		};\
+	</script>');
+
+
 // ---------------------------------------------- 办结
 
 $('body').append('\
@@ -529,6 +543,7 @@ $('body').append('\
 				      </tr>\' \
 					);\
 				};\
+				sleep(1000);\
 			};\
 		};\
 	</script>');
